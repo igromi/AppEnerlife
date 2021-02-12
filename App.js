@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableHighlight, I18nManager } from 'react-native';
-import { Spinner } from 'native-base';
 import ImageLogo from './Img.js'
 import ProgressCircle from 'react-native-progress-circle'
 
@@ -34,7 +33,7 @@ export default function App() {
       console.log(err);
     });
 
-  console.log("test");  
+  console.log("test")  
 };
 
   return (
@@ -42,27 +41,56 @@ export default function App() {
       
       <ImageLogo/>
        
+      <View style={styles.container2}>
         <ProgressCircle
-            percent={Math.round(W/22)}
-            radius={80}
+            percent={Math.round(W/10)}
+            radius={60}
             borderWidth={8}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
         >
-            <Text style={{ fontSize: 18 }}>{Math.round(W/22)}% Potencia</Text>
+          <View>
+            <Text style={{ fontSize: 18 }}>{W} W </Text>
+            </View>
         </ProgressCircle>
+        <ProgressCircle
+            percent={Math.round(KWH/2.4)}
+            radius={60}
+            borderWidth={8}
+            color="#3399FF"
+            shadowColor="#999"
+            bgColor="#fff"
+        >
         
+          <View>
+            <Text style={{ fontSize: 18 }}>{KWH} KWH</Text>
+            </View>
+        </ProgressCircle>
+        <ProgressCircle
+            percent={Math.round(pesos/360)}
+            radius={60}
+            borderWidth={8}
+            color="#3399FF"
+            shadowColor="#999"
+            bgColor="#fff"
+        >
+          <View>
+            <Text style={{ fontSize: 18 }}> ${pesos}</Text>
+            </View>
+        </ProgressCircle>
+        </View>  
       <View>
-        <Text style={styles.title}></Text>
+    
         <Text style={styles.title}>Generación Actual: {W} W</Text>
         <Text style={styles.title}>Energía generada del mes: {KWH} KWH</Text>
         <Text style={styles.title}>Ahorro aprox en el mes: ${pesos}</Text>
         <Text style={styles.title}></Text>
       </View>
+      <View style={styles.container2}> 
       <TouchableHighlight onPress={fetchApiCall}>
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Consultar</Text>
+          <Text style={styles.buttonText}>Consultar </Text>
         </View>
       </TouchableHighlight>
       <TouchableHighlight >
@@ -70,8 +98,10 @@ export default function App() {
           <Text style={styles.buttonText}>Configurar</Text>
         </View>
       </TouchableHighlight>
+      </View>
       <StatusBar style="auto" />
     </View>
+
   );
 }
 
@@ -81,6 +111,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: '#008000'
+  },
+  container2:{
+  
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    color: '#008000'  
   },
   title: {
     fontSize: 20,
