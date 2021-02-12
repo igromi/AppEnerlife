@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableHighlight, I18nManager } from 'react-native';
+import { Spinner } from 'native-base';
 import ImageLogo from './Img.js'
+import ProgressCircle from 'react-native-progress-circle'
 
 export default function App() {
   let [KWH, setKWH] = React.useState('')
@@ -31,12 +33,28 @@ export default function App() {
     .catch(err => {
       console.log(err);
     });
+
+  console.log("test");  
 };
 
   return (
     <View style={styles.container}>
+      
       <ImageLogo/>
+       
+        <ProgressCircle
+            percent={Math.round(W/22)}
+            radius={80}
+            borderWidth={8}
+            color="#3399FF"
+            shadowColor="#999"
+            bgColor="#fff"
+        >
+            <Text style={{ fontSize: 18 }}>{Math.round(W/22)}% Potencia</Text>
+        </ProgressCircle>
+        
       <View>
+        <Text style={styles.title}></Text>
         <Text style={styles.title}>Generación Actual: {W} W</Text>
         <Text style={styles.title}>Energía generada del mes: {KWH} KWH</Text>
         <Text style={styles.title}>Ahorro aprox en el mes: ${pesos}</Text>
@@ -49,7 +67,7 @@ export default function App() {
       </TouchableHighlight>
       <TouchableHighlight >
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Configurar Lector</Text>
+          <Text style={styles.buttonText}>Configurar</Text>
         </View>
       </TouchableHighlight>
       <StatusBar style="auto" />
