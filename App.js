@@ -42,10 +42,10 @@ export default function App() {
       <ImageLogo/>
        
       <View style={styles.container2}>
-        <ProgressCircle
+        <ProgressCircle 
             percent={Math.round(W/10)}
-            radius={60}
-            borderWidth={8}
+            radius={50}
+            borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
@@ -54,23 +54,25 @@ export default function App() {
             <Text style={{ fontSize: 18 }}>{W} W </Text>
             </View>
         </ProgressCircle>
+        <Text style={styles.buttonText}>""</Text>
         <ProgressCircle
             percent={Math.round(KWH/2.4)}
-            radius={60}
-            borderWidth={8}
+            radius={50}
+            borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
         >
-        
+      
           <View>
             <Text style={{ fontSize: 18 }}>{KWH} KWH</Text>
             </View>
         </ProgressCircle>
+        <Text style={styles.buttonText}>""</Text>
         <ProgressCircle
             percent={Math.round(pesos/360)}
-            radius={60}
-            borderWidth={8}
+            radius={50}
+            borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
@@ -110,23 +112,36 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#008000'
+    color: '#008000',
+    marginRight:5,
+    marginLeft:5,
+    marginTop:5,
+    paddingBottom:5,
   },
   container2:{
-  
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    color: '#008000'  
+    color: '#008000',
+    marginRight:5,
+    marginLeft:5,
+    marginTop:5,
+    paddingBottom:5, 
   },
   title: {
     fontSize: 20,
     color: '#008000'
   },
+  circulo:
+  {
+    marginRight:5,
+    marginLeft:5,
+
+  },
   button: {
-    marginRight:40,
-    marginLeft:40,
+    marginRight:15,
+    marginLeft:15,
     marginTop:10,
     paddingTop:20,
     paddingRight:20,

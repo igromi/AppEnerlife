@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
+import { Image } from 'react-native'
 
 const ImagesExample = () => (
    <Image source = {{uri:'https://images.assetsdelivery.com/compings_v2/wahyufrida/wahyufrida2001/wahyufrida200100175.jpg'}}
-   style = {{ width: 300, height: 300}}
+   style = {{ width: 350, height: 350}}
    />
 )
 export default ImagesExample
