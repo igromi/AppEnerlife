@@ -1,28 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight, I18nManager } from 'react-native';
+import {TextInput, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import ImageLogo from './Img.js'
 import ProgressCircle from 'react-native-progress-circle'
 
 export default function App() {
   let [KWH, setKWH] = React.useState('')
-  let [pesos, setPesos] = React.useState('')
   let [W, setPotencia] = React.useState('')
+  const [valueText, onChangeText] = React.useState('');
 
   const fetchApiCall = () => {
-    fetch("http://iot.enerlife.cl:8000/energia/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", {
+    fetch("http://iot.enerlife.cl:8000/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9?id="+valueText+"&var=KWH", {
       "method": "GET",
     })
       .then(response => response.json())
       .then(response => {
         setKWH(response.KWH);
-        setPesos(response.pesos);
       })
       .catch(err => {
         console.log(err);
       });
 
-  fetch("http://iot.enerlife.cl:8000/potencia/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", {
+  fetch("http://iot.enerlife.cl:8000/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9?id="+valueText+"&var=W", {
     "method": "GET",
   })
     .then(response => response.json())
@@ -44,20 +43,20 @@ export default function App() {
       <View style={styles.container2}>
         <ProgressCircle 
             percent={Math.round(W/10)}
-            radius={50}
+            radius={60}
             borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
         >
           <View>
-            <Text style={{ fontSize: 18 }}>{W} W </Text>
+            <Text style={{ fontSize: 16 }}>{W} W </Text>
             </View>
         </ProgressCircle>
         <Text style={styles.buttonText}>""</Text>
         <ProgressCircle
             percent={Math.round(KWH/2.4)}
-            radius={50}
+            radius={60}
             borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
@@ -65,29 +64,37 @@ export default function App() {
         >
       
           <View>
-            <Text style={{ fontSize: 18 }}>{KWH} KWH</Text>
+            <Text style={{ fontSize: 16 }}>{KWH} KWH</Text>
             </View>
         </ProgressCircle>
         <Text style={styles.buttonText}>""</Text>
         <ProgressCircle
-            percent={Math.round(pesos/360)}
-            radius={50}
+            percent={Math.round((Math.round(KWH*150))/360)}
+            radius={60}
             borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
         >
+     
           <View>
-            <Text style={{ fontSize: 18 }}> ${pesos}</Text>
+            <Text style={{ fontSize: 16 }}> ${Math.round(KWH*150)}</Text>
             </View>
         </ProgressCircle>
         </View>  
       <View>
+     
     
         <Text style={styles.title}>Generación Actual: {W} W</Text>
         <Text style={styles.title}>Energía generada del mes: {KWH} KWH</Text>
-        <Text style={styles.title}>Ahorro aprox en el mes: ${pesos}</Text>
+        <Text style={styles.title}>Ahorro aprox en el mes: ${Math.round(KWH*150)}</Text>
         <Text style={styles.title}></Text>
+
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={text => onChangeText(text)}
+          valueText={valueText}
+      />
       </View>
       <View style={styles.container2}> 
       <TouchableHighlight onPress={fetchApiCall}>
@@ -130,7 +137,7 @@ const styles = StyleSheet.create({
     paddingBottom:5, 
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#008000'
   },
   circulo:
