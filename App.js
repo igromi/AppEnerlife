@@ -93,7 +93,7 @@ export default function App() {
       <View style={styles.container2}>
 
         <ProgressCircle 
-              percent={Math.round(W/10)}
+              percent={Math.round(KWHxD*10)}
               radius={55}
               borderWidth={5}
               color="#3399FF"
@@ -107,7 +107,7 @@ export default function App() {
           <Text style={styles.buttonText}>""</Text>
 
           <ProgressCircle
-              percent={Math.round(W/20)}
+              percent={Math.round(KWH/100)}
               radius={55}
               borderWidth={5}
               color="#3399FF"
@@ -130,7 +130,7 @@ export default function App() {
       <View style={styles.container2}>
 
         <ProgressCircle 
-              percent={Math.round(W/10)}
+              percent={parseFloat(KWHxD*150).toFixed(0)/100}
               radius={55}
               borderWidth={5}
               color="#3399FF"
@@ -144,7 +144,7 @@ export default function App() {
           <Text style={styles.buttonText}>""</Text>
 
           <ProgressCircle
-              percent={Math.round(W/20)}
+              percent={Math.round(KWH*150)/10000}
               radius={55}
               borderWidth={5}
               color="#3399FF"
