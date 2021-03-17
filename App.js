@@ -7,12 +7,15 @@ import ProgressCircle from 'react-native-progress-circle'
 export default function App() {
   let [KWH, setKWH] = React.useState('')
   let [W, setPotencia] = React.useState('')
+  let [KWHxD, setKWHxD] = React.useState('')
   const [valueText, onChangeText] = React.useState('');
+
+  //lamadas a las API , se pasa como parametro la variable a rescatar y trae el ultimo valor , tambien se cosidera el formato VAR+ID
 
   const fetchApiCall = () => {
     fetch("http://iot.enerlife.cl:8000/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9?id="+valueText+"&var=KWH", {
       "method": "GET",
-    })
+      })
       .then(response => response.json())
       .then(response => {
         setKWH(response.KWH);
@@ -21,18 +24,28 @@ export default function App() {
         console.log(err);
       });
 
-  fetch("http://iot.enerlife.cl:8000/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9?id="+valueText+"&var=W", {
-    "method": "GET",
-  })
-    .then(response => response.json())
-    .then(response => {
-      setPotencia(response.W);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-
-  console.log("test")  
+    fetch("http://iot.enerlife.cl:8000/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9?id="+valueText+"&var=W", {
+        "method": "GET",
+       })
+        .then(response => response.json())
+        .then(response => {
+          setPotencia(response.W);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      
+    fetch("http://iot.enerlife.cl:8000/v1/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9?id="+valueText+"&var=KWHxD", {
+        "method": "GET",
+        })
+        .then(response => response.json())
+        .then(response => {
+          setKWHxD(response.KWHxD);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+        <Text style={styles.title}>Generado en pesos del día: ${parseFloat(KWHxD*150).toFixed(0)}</Text>
 };
 
   return (
@@ -41,61 +54,117 @@ export default function App() {
       <ImageLogo/>
        
       <View style={styles.container2}>
+
         <ProgressCircle 
             percent={Math.round(W/10)}
-            radius={60}
+            radius={55}
             borderWidth={5}
             color="#3399FF"
             shadowColor="#999"
             bgColor="#fff"
         >
-          <View>
-            <Text style={{ fontSize: 16 }}>{W} W </Text>
+            <View>
+                <Text style={{ fontSize: 16 }}>{W} W</Text>
             </View>
         </ProgressCircle>
         <Text style={styles.buttonText}>""</Text>
-        <ProgressCircle
-            percent={Math.round(KWH/2.4)}
-            radius={60}
-            borderWidth={5}
-            color="#3399FF"
-            shadowColor="#999"
-            bgColor="#fff"
-        >
-      
-          <View>
-            <Text style={{ fontSize: 16 }}>{KWH} KWH</Text>
-            </View>
-        </ProgressCircle>
-        <Text style={styles.buttonText}>""</Text>
-        <ProgressCircle
-            percent={Math.round((Math.round(KWH*150))/360)}
-            radius={60}
-            borderWidth={5}
-            color="#3399FF"
-            shadowColor="#999"
-            bgColor="#fff"
-        >
-     
-          <View>
-            <Text style={{ fontSize: 16 }}> ${Math.round(KWH*150)}</Text>
-            </View>
-        </ProgressCircle>
-        </View>  
-      <View>
-     
-    
-        <Text style={styles.title}>Generación Actual: {W} W</Text>
-        <Text style={styles.title}>Energía generada del mes: {KWH} KWH</Text>
-        <Text style={styles.title}>Ahorro aprox en el mes: ${Math.round(KWH*150)}</Text>
-        <Text style={styles.title}></Text>
 
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={text => onChangeText(text)}
-          valueText={valueText}
-      />
+        <ProgressCircle
+            percent={Math.round(W/20)}
+            radius={55}
+            borderWidth={5}
+            color="#3399FF"
+            shadowColor="#999"
+            bgColor="#fff"
+             >
+            <View>
+                <Text style={{ fontSize: 16 }}>{Math.round(W/20)}%</Text>
+            </View>
+        </ProgressCircle>
+        </View>
+      
+        <View>
+          <Text style={styles.title}></Text>
+          <Text style={styles.title}>Potencia Actual: {W} W</Text>
+          <Text style={styles.title}>Eficiencia: {Math.round(W/20)}%</Text>
+          <Text style={styles.title}></Text>
+        </View>
+        
+      <View style={styles.container2}>
+
+        <ProgressCircle 
+              percent={Math.round(W/10)}
+              radius={55}
+              borderWidth={5}
+              color="#3399FF"
+              shadowColor="#999"
+              bgColor="#fff"
+          >
+              <View>
+                  <Text style={{ fontSize: 16 }}>{parseFloat(KWHxD).toFixed(2)} KWH</Text>
+              </View>
+          </ProgressCircle>
+          <Text style={styles.buttonText}>""</Text>
+
+          <ProgressCircle
+              percent={Math.round(W/20)}
+              radius={55}
+              borderWidth={5}
+              color="#3399FF"
+              shadowColor="#999"
+              bgColor="#fff"
+              >
+              <View>
+                  <Text style={{ fontSize: 16 }}>{KWH} KWH</Text>
+              </View>
+          </ProgressCircle>
+
       </View>
+      <View>
+        <Text style={styles.title}></Text>
+        <Text style={styles.title}>Generación del día: {parseFloat(KWHxD).toFixed(2)} KWH</Text>
+        <Text style={styles.title}>Energía generada total: {KWH} KWH</Text>
+        <Text style={styles.title}></Text>
+      </View>
+
+      <View style={styles.container2}>
+
+        <ProgressCircle 
+              percent={Math.round(W/10)}
+              radius={55}
+              borderWidth={5}
+              color="#3399FF"
+              shadowColor="#999"
+              bgColor="#fff"
+          >
+              <View>
+                  <Text style={{ fontSize: 16 }}>${parseFloat(KWHxD*150).toFixed(0)}</Text>
+              </View>
+          </ProgressCircle>
+          <Text style={styles.buttonText}>""</Text>
+
+          <ProgressCircle
+              percent={Math.round(W/20)}
+              radius={55}
+              borderWidth={5}
+              color="#3399FF"
+              shadowColor="#999"
+              bgColor="#fff"
+              >
+              <View>
+                  <Text style={{ fontSize: 16 }}>${Math.round(KWH*150)}</Text>
+              </View>
+          </ProgressCircle>
+
+        </View>
+
+      <View>
+        <Text style={styles.title}></Text>
+        <Text style={styles.title}>Beneficio en pesos del día: ${parseFloat(KWHxD*150).toFixed(0)}</Text>
+        <Text style={styles.title}>Beneficio en pesos total: ${Math.round(KWH*150)}</Text>
+        <Text style={styles.title}></Text>
+      </View>
+
       <View style={styles.container2}> 
       <TouchableHighlight onPress={fetchApiCall}>
         <View style={styles.button}>
